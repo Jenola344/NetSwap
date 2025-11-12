@@ -2,9 +2,8 @@
 
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
 import type { NetworkType } from "@/lib/types";
-import { Wallet } from "lucide-react";
+import { ConnectButton } from "@reown/appkit";
 
 interface HeaderProps {
   networkMode: NetworkType;
@@ -35,10 +34,7 @@ export function Header({ networkMode, onNetworkChange }: HeaderProps) {
               Testnet
             </Label>
           </div>
-          <Button>
-            <Wallet className="mr-0 md:mr-2 h-4 w-4" />
-            <span className="hidden md:inline">Connect Wallet</span>
-          </Button>
+          <ConnectButton />
         </div>
       </div>
     </header>
