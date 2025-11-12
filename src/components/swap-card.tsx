@@ -43,7 +43,7 @@ import { ALL_TOKENS } from "@/lib/tokens";
 import type { NetworkType, Token } from "@/lib/types";
 import { getSlippageRecommendation } from "@/lib/actions";
 import type { SlippageRecommendationOutput } from "@/ai/flows/slippage-recommendation";
-import { useAccount } from "wagmi";
+import { useWallet } from "@/hooks/use-wallet";
 
 interface SwapCardProps {
   networkMode: NetworkType;
@@ -61,7 +61,7 @@ const TokenSelectItem = ({ token }: { token: Token }) => (
 
 export function SwapCard({ networkMode }: SwapCardProps) {
   const { toast } = useToast();
-  const { isConnected } = useAccount();
+  const { isConnected, connectWallet } = useWallet();
   const availableTokens = useMemo(
     () => ALL_TOKENS.filter((t) => t.chain.networkType === networkMode),
     [networkMode]
@@ -172,6 +172,10 @@ export function SwapCard({ networkMode }: SwapCardProps) {
   };
 
   const handleSwap = () => {
+    if (!isConnected) {
+      connectWallet().catch(err => console.error("Failed to connect wallet", err));
+      return;
+    }
     setIsSwapping(true);
     setTimeout(() => {
       setIsSwapping(false);
@@ -333,7 +337,7 @@ export function SwapCard({ networkMode }: SwapCardProps) {
         <Button
           className="w-full text-lg h-12 bg-accent hover:bg-accent/90 text-accent-foreground"
           onClick={handleSwap}
-          disabled={!isConnected || isSwapping || isLoadingQuote || !parseFloat(amountIn) || !tokenIn || !tokenOut}
+          disabled={isSwapping || isLoadingQuote || !parseFloat(amountIn) || !tokenIn || !tokenOut}
         >
           {isSwapping ? (
             <Loader2 className="mr-2 h-5 w-5 animate-spin" />

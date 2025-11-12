@@ -3,7 +3,10 @@
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import type { NetworkType } from "@/lib/types";
-import { ConnectButton } from "@reown/appkit";
+import { Button } from "@/components/ui/button";
+import { useWallet } from "@/hooks/use-wallet";
+import { truncateAddress } from "@/lib/utils";
+
 
 interface HeaderProps {
   networkMode: NetworkType;
@@ -11,7 +14,16 @@ interface HeaderProps {
 }
 
 export function Header({ networkMode, onNetworkChange }: HeaderProps) {
+  const { connectWallet, disconnectWallet, address, isConnecting } = useWallet();
   const isTestnet = networkMode === "Testnet";
+
+  const handleConnect = async () => {
+    try {
+      await connectWallet();
+    } catch (error) {
+      console.error("Failed to connect wallet:", error);
+    }
+  };
 
   return (
     <header className="p-4 border-b bg-card/50 backdrop-blur-sm sticky top-0 z-10">
@@ -34,7 +46,16 @@ export function Header({ networkMode, onNetworkChange }: HeaderProps) {
               Testnet
             </Label>
           </div>
-          <ConnectButton />
+          {address ? (
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-mono bg-muted px-2 py-1 rounded-md">{truncateAddress(address)}</span>
+              <Button variant="outline" size="sm" onClick={disconnectWallet}>Disconnect</Button>
+            </div>
+          ) : (
+            <Button onClick={handleConnect} disabled={isConnecting}>
+              {isConnecting ? "Connecting..." : "Connect Wallet"}
+            </Button>
+          )}
         </div>
       </div>
     </header>
