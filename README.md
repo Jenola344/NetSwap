@@ -15,46 +15,11 @@ If you're developing DApps, you need to test token swaps before going live. NetS
 ### Requirements
 
 - MetaMask or another Web3 wallet
-- Node.js 16 or higher (for local development)
-- Testnet ETH/MATIC if you want to use testnets
-
-### Running Locally
-
-```bash
-git clone https://github.com/Jenola344/NetSwap.git
-cd NetSwap
-npm install
-```
-
-Create a `.env` file:
-
-```env
-REACT_APP_INFURA_PROJECT_ID=your_infura_id
-REACT_APP_ALCHEMY_API_KEY=your_alchemy_key
-REACT_APP_WALLET_CONNECT_PROJECT_ID=your_walletconnect_id
-REACT_APP_SUPPORTED_NETWORKS=1,5,137,80001
-```
 
 Get these credentials from:
 - Infura: https://infura.io (free tier available)
 - Alchemy: https://alchemy.com (free tier available)
 - WalletConnect: https://cloud.walletconnect.com
-
-Start the dev server:
-
-```bash
-npm start
-```
-
-Open http://localhost:3000
-
-### Deploying
-
-```bash
-npm run build
-```
-
-The `build/` folder contains static files you can host anywhere. The app is designed to work on IPFS, Vercel, Netlify, or traditional hosting.
 
 ## Supported Networks
 
@@ -92,23 +57,6 @@ The `build/` folder contains static files you can host anywhere. The app is desi
 - Transaction deadline: 10-30 minutes
 - Expert mode: Skip confirmation screens (be careful with this)
 
-## Project Structure
-
-```
-NetSwap/
-├── src/
-│   ├── components/
-│   │   ├── Swap/          # Main swap interface
-│   │   ├── Wallet/        # Wallet connection
-│   │   ├── Network/       # Network switcher
-│   │   └── UI/            # Buttons, modals, etc.
-│   ├── hooks/             # React hooks for Web3
-│   ├── services/          # Web3 integration
-│   ├── utils/             # Token lists, formatters
-│   └── types/             # TypeScript definitions
-├── contracts/             # Swap router contracts
-└── public/                # Static assets
-```
 
 ## Tech Stack
 
@@ -128,23 +76,6 @@ NetSwap/
 - Swap router for token exchanges
 - Price oracle for real-time rates
 - Custom liquidity pools
-
-## Development Commands
-
-```bash
-npm start              # Development server
-npm run build          # Production build
-npm test               # Run tests
-npm run lint           # Check code style
-npm run type-check     # Validate TypeScript
-```
-
-**Smart Contracts:**
-```bash
-npx hardhat compile                           # Compile contracts
-npx hardhat test                              # Test contracts
-npx hardhat run scripts/deploy.js --network goerli  # Deploy
-```
 
 ## Important Security Notes
 
@@ -213,4 +144,4 @@ MIT License - see LICENSE file
 
 ## Disclaimer
 
-This is experimental software. Use at your own risk. Always verify transactions before confirming. The developers are not responsible for lost funds due to user error, bugs, or smart contract vulnerabilities. Never trade more than you can afford to lose.
+This is experimental software. Always verify transactions before confirming. The developers are not responsible for lost funds due to user error, bugs, or smart contract vulnerabilities. Never trade more than you can afford to lose.
